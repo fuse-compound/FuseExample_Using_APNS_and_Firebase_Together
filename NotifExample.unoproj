@@ -1,0 +1,32 @@
+{
+  "Packages": [
+    "Fuse",
+    "FuseJS",
+    "Fuse.BasicTheme"
+  ],
+  "Projects": [
+    "../Fuse.Firebase/src/Firebase.Notifications.Android/Firebase.Notifications.Android.unoproj",
+    "../Fuse.APNS/src/Fuse.APNS.unoproj"
+  ],
+  "Android": {
+    "NotificationIcon": {
+      "LDPI": "Foo.png",
+      "MDPI": "Foo.png",
+      "HDPI": "Foo.png",
+      "XHDPI": "Foo.png",
+      "XXHDPI": "Foo.png",
+      "XXXHDPI": "Foo.png"
+    },
+  },
+  "Firebase": {
+    "GoogleServices": {
+      "Android": "google-services.json",
+      "iOS": "GoogleService-Info.plist"
+    }
+  },
+  "Includes": [
+    "*",
+    "assets/thing.png:Bundle",
+    "GoogleService-Info.plist:ObjCSource:iOS"
+  ]
+}
