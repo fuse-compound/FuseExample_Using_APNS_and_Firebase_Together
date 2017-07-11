@@ -15,6 +15,7 @@ var message = Observable("-no message yet-");
 
 Push.onRegistrationSucceeded = function(regID) {
     console.log ("Reg Succeeded: " + regID);
+	if(Environment.ios) APNStoFCM(regID);
     status.value = "onRegistrationSucceeded: " + regID;
 };
 
@@ -35,6 +36,35 @@ var clearBadgeNumber = function() {
 var clearAllNotifications = function() {
     Push.clearAllNotifications();
 }
+
+function APNStoFCM(token) {
+    var body = {
+		application : 'com.yourapp.id', // Use your own app id
+		sandbox : true, // Change this to FALSE when deploying to the App Store
+		apns_tokens : [token]
+    };
+
+    var options = {
+		method: "POST",
+		headers: {
+		    'Accept': 'application/json',
+		    "Content-type": "application/json; charset=UTF-8",
+		    'Authorization' : 'key=YOURKEY' // You can find you key under Firebase / Project Settings / Cloud Messaging / Server Key
+		},
+		body: JSON.stringify(body)
+    };
+
+    fetch("https://iid.googleapis.com/iid/v1:batchImport", options)
+	.then(function(response) {
+	    return response.json();
+	}).then(function(response) {
+	    console.log("Response " + JSON.stringify(response))
+		status.value = "FCM : " + response.results[0].registration_token;
+	}).catch(function(error) {
+	    console.log("Error " + JSON.stringify(error))
+	});
+};
+
 
 module.exports = {
     clearBadgeNumber: clearBadgeNumber,
